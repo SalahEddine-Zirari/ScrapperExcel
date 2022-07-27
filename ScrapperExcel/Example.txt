@@ -1,4 +1,6 @@
-﻿[
+﻿excel to json directly example
+
+[
   {
     "Date": "Sat 09/07",
     "Prices (EUR/MWh)": "170.3",
