@@ -90,3 +90,37 @@
 //Console.WriteLine(GetExc());
 
 
+//Blocks obj = new Blocks();
+//var i = 0;
+//foreach (PropertyInfo prop in obj.GetType().GetProperties())
+//{
+//    var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+//    if (type == typeof(string))
+//    {
+//        i++;
+//    }
+
+//}
+//Console.WriteLine(i);
+//;
+
+
+
+//var obj = new Blocks()
+
+//{
+//    Date = OgDate,
+//    OffPeak1 = dt.Rows[4][i].ToString(),
+//    OffPeak2 = dt.Rows[5][i].ToString(),
+//    MiddleNight = dt.Rows[6][i].ToString(),
+//    Night = dt.Rows[7][i].ToString(),
+//    EarlyMorning = dt.Rows[8][i].ToString(),
+//    Morning = dt.Rows[9][i].ToString(),
+//    LateMorning = dt.Rows[10][i].ToString(),
+//    Business = dt.Rows[11][i].ToString(),
+//    HighNoon = dt.Rows[12][i].ToString(),
+//    EarlyAfternoon = dt.Rows[13][i].ToString(),
+//    Afternoon = dt.Rows[14][i].ToString(),
+//    RushHour = dt.Rows[15][i].ToString(),
+//    Evening = dt.Rows[16][i].ToString()
+//};

@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Net.Http;
 using ScrapperExcel;
+using System.Reflection;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -44,3 +45,4 @@ void ShowBlocks()
 //ShowBaseLoad();
 
 ShowBlocks();
+

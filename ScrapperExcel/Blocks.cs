@@ -32,48 +32,31 @@ namespace ScrapperExcel
         {
             var Data = new List<Blocks>();
 
+            var row = 4;
             var date = dt.Rows[1][0].ToString();
+
             DateOnly OgDate = DateOnly.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             OgDate = OgDate.AddDays(-6);
 
             for (int i = 1; i < dt.Columns.Count; i++)
             {
-            //    var obj = new Blocks();
-
-            //    foreach (PropertyInfo prop in obj.GetType().GetProperties())
-            //    {
-            //        Date = OgDate;
-            //        var row = 4;
-            //        var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-            //        if (type == typeof(string))
-            //        {
-            //            prop.SetValue(obj, dt.Rows[row][i].ToString());
-            //            row++;
-            //        }
-                    
-            //    };
-
-                var obj = new Blocks()
-
+                var obj = new Blocks();
+                obj.Date = OgDate;
+                foreach (PropertyInfo prop in obj.GetType().GetProperties())
                 {
-                    Date = OgDate,
-                    OffPeak1 = dt.Rows[4][i].ToString(),
-                    OffPeak2 = dt.Rows[5][i].ToString(),
-                    MiddleNight = dt.Rows[6][i].ToString(),
-                    Night = dt.Rows[7][i].ToString(),
-                    EarlyMorning = dt.Rows[8][i].ToString(),
-                    Morning = dt.Rows[9][i].ToString(),
-                    LateMorning = dt.Rows[10][i].ToString(),
-                    Business = dt.Rows[11][i].ToString(),
-                    HighNoon = dt.Rows[12][i].ToString(),
-                    EarlyAfternoon = dt.Rows[13][i].ToString(),
-                    Afternoon = dt.Rows[14][i].ToString(),
-                    RushHour = dt.Rows[15][i].ToString(),
-                    Evening = dt.Rows[16][i].ToString()
+                   
+                    var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                    if (type == typeof(string))
+                    {
+                        prop.SetValue(obj, dt.Rows[row][i].ToString());
+                        row++;
+                    }
+
                 };
 
                 Data.Add(obj);
                 OgDate = OgDate.AddDays(1);
+                row = 4;
             }
             return Data;
         }
@@ -81,7 +64,8 @@ namespace ScrapperExcel
 
         public override string ToString()
         {
-            return $"{Date} \n{OffPeak1} \n{OffPeak2} \n{MiddleNight}\n{Night}\n \n  ";
+            return $"{Date} \n{OffPeak1} \n{OffPeak2} \n{MiddleNight}\n{Night}\n.\n.\n. \n\n  ";
         }
     }
 }
+
