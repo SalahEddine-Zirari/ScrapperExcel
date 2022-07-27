@@ -1,48 +1,14 @@
-﻿using ExcelDataReader;
-using System.Data;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-using System.IO;
-using System.Text;
-using System.Net.Http;
-using ScrapperExcel;
-using System.Reflection;
+﻿using ScrapperExcel;
 
-System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+// var stream = File.Open(Path.GetFullPath(@"C:\Users\Cheato\Downloads\data.xlsx"), FileMode.Open, FileAccess.Read);
 
-void ShowBaseLoad()
-{
-    BaseLoadPeakLoad bp = new BaseLoadPeakLoad();
 
-    var dt = bp.GetLoad(0);
-    var list = bp.DtToObj(dt);
+var provider = new ExcelDataProvider();
 
-    bp.CheckObjList(list);
+var stream = await provider.GetData(DateTime.Today.AddDays(-1));
 
-}
+var parser = new ExcelDataParser();
 
-void ShowPeakLoad()
-{
-    BaseLoadPeakLoad bp = new BaseLoadPeakLoad();
+var data = parser.ReadExcelFile(stream);
 
-    var dt = bp.GetLoad(1);
-    var list = bp.DtToObj(dt);
-
-    bp.CheckObjList(list);
-}
-
-void ShowBlocks()
-{
-    Blocks blocks = new Blocks();
-
-    var dt = blocks.GetLoad(2);
-    var list = blocks.DtToObj(dt);
-
-   blocks.CheckObjList(list);
-}
-
-//ShowBaseLoad();
-
-ShowBlocks();
-
+Console.ReadKey();

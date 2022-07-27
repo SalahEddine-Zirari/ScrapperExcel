@@ -5,6 +5,10 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapperExcel", "ScrapperExcel\ScrapperExcel.csproj", "{0351E864-E326-4432-9467-DDD52812FAB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slah.Domain", "Slah.Domain\Slah.Domain.csproj", "{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slah.Services", "Slah.Services\Slah.Services.csproj", "{AF79789B-39F7-4CF9-848A-2B86524FB447}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{0351E864-E326-4432-9467-DDD52812FAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0351E864-E326-4432-9467-DDD52812FAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0351E864-E326-4432-9467-DDD52812FAB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF79789B-39F7-4CF9-848A-2B86524FB447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF79789B-39F7-4CF9-848A-2B86524FB447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF79789B-39F7-4CF9-848A-2B86524FB447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF79789B-39F7-4CF9-848A-2B86524FB447}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
