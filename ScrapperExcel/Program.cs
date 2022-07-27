@@ -41,5 +41,6 @@ void ShowBlocks()
    blocks.CheckObjList(list);
 }
 
+//ShowBaseLoad();
 
 ShowBlocks();

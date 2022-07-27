@@ -11,7 +11,7 @@ namespace ScrapperExcel
     public class BaseLoadPeakLoad : Generic<BaseLoadPeakLoad>
     {
 
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public double Price { get; set; }
         public double Volume { get; set; }
 
@@ -25,7 +25,7 @@ namespace ScrapperExcel
             var Data = new List<BaseLoadPeakLoad>();
 
             var date = dt.Rows[1][0].ToString();
-            DateTime OgDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateOnly OgDate = DateOnly.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             OgDate = OgDate.AddDays(-6);
 
             for (int i = 1; i < dt.Columns.Count; i++)

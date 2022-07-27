@@ -11,6 +11,7 @@ namespace ScrapperExcel
 {
     public class Blocks :  Generic<Blocks>
     {
+        public DateOnly Date { get; set; }
         public string OffPeak1 { get; set; }
         public string OffPeak2 { get; set; }
         public string MiddleNight { get; set; }
@@ -32,42 +33,44 @@ namespace ScrapperExcel
             var Data = new List<Blocks>();
 
             var date = dt.Rows[1][0].ToString();
-            DateTime OgDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateOnly OgDate = DateOnly.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             OgDate = OgDate.AddDays(-6);
 
-            for (int i = 0; i < dt.Columns.Count; i++)
+            for (int i = 1; i < dt.Columns.Count; i++)
             {
-                    var obj = new Blocks();
-                
-                    foreach(PropertyInfo prop in obj.GetType().GetProperties())
-                    {
-                        
-                        var row = 4;
-                        var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-                        if (type == typeof(string))
-                        {
-                            prop.SetValue(obj,dt.Rows[row][i].ToString());
-                            row++;
-                        }
+            //    var obj = new Blocks();
 
+            //    foreach (PropertyInfo prop in obj.GetType().GetProperties())
+            //    {
+            //        Date = OgDate;
+            //        var row = 4;
+            //        var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+            //        if (type == typeof(string))
+            //        {
+            //            prop.SetValue(obj, dt.Rows[row][i].ToString());
+            //            row++;
+            //        }
+                    
+            //    };
 
-                    };
+                var obj = new Blocks()
 
-               //OffPeak1 = (double)dt.Rows[][i],
-               //OffPeak2 = (double)dt.Rows[][i],
-               //MiddleNight = (double)dt.Rows[][i],
-               //Night = (double)dt.Rows[][i],
-               //EarlyMorning = (double)dt.Rows[][i],
-               //Morning = (double)dt.Rows[][i],
-               //LateMorning = (double)dt.Rows[][i],
-               //Business = (double)dt.Rows[][i],
-               //HighNoon = (double)dt.Rows[][i],
-               //EarlyAfternoon = (double)dt.Rows[][i],
-               //Afternoon = (double)dt.Rows[][i],
-               //RushHour = (double)dt.Rows[][i],
-               //Evening = (double)dt.Rows[][i]
-
-               ;
+                {
+                    Date = OgDate,
+                    OffPeak1 = dt.Rows[4][i].ToString(),
+                    OffPeak2 = dt.Rows[5][i].ToString(),
+                    MiddleNight = dt.Rows[6][i].ToString(),
+                    Night = dt.Rows[7][i].ToString(),
+                    EarlyMorning = dt.Rows[8][i].ToString(),
+                    Morning = dt.Rows[9][i].ToString(),
+                    LateMorning = dt.Rows[10][i].ToString(),
+                    Business = dt.Rows[11][i].ToString(),
+                    HighNoon = dt.Rows[12][i].ToString(),
+                    EarlyAfternoon = dt.Rows[13][i].ToString(),
+                    Afternoon = dt.Rows[14][i].ToString(),
+                    RushHour = dt.Rows[15][i].ToString(),
+                    Evening = dt.Rows[16][i].ToString()
+                };
 
                 Data.Add(obj);
                 OgDate = OgDate.AddDays(1);
@@ -78,7 +81,7 @@ namespace ScrapperExcel
 
         public override string ToString()
         {
-            return $"{OffPeak1} \n{HighNoon} \n{Evening}\n \n  ";
+            return $"{Date} \n{OffPeak1} \n{OffPeak2} \n{MiddleNight}\n{Night}\n \n  ";
         }
     }
 }
