@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapperExcel", "ScrapperExcel\ScrapperExcel.csproj", "{0351E864-E326-4432-9467-DDD52812FAB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapperExcel", "ScrapperExcel\ScrapperExcel.csproj", "{0351E864-E326-4432-9467-DDD52812FAB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slah.Domain", "Slah.Domain\Slah.Domain.csproj", "{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salah.Domain", "Slah.Domain\Salah.Domain.csproj", "{74A78E70-5A6B-40C3-AA20-5B9FB2B00BFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slah.Services", "Slah.Services\Slah.Services.csproj", "{AF79789B-39F7-4CF9-848A-2B86524FB447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salah.Services", "Slah.Services\Salah.Services.csproj", "{AF79789B-39F7-4CF9-848A-2B86524FB447}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

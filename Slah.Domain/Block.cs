@@ -8,20 +8,6 @@ public class Block
 
 
 
-public class Period
-{
-    public DateTime Start { get; set; }
-    public DateTime End  { get; set; }
-}
 
-public class PeriodicPrice
-{
-    public Period Period { get; set; }
-    public decimal? Price  { get; set; }
-    public string Name  { get; set; } = null!;
-}
 
-public class PeriodicPriceAndVolume : PeriodicPrice
-{
-    public decimal? Volume  { get; set; }
-}
+

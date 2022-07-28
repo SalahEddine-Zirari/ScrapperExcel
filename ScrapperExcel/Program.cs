@@ -1,14 +1,17 @@
 ﻿using ScrapperExcel;
+using System.Text.RegularExpressions;
 
-// var stream = File.Open(Path.GetFullPath(@"C:\Users\Cheato\Downloads\data.xlsx"), FileMode.Open, FileAccess.Read);
 
 
 var provider = new ExcelDataProvider();
 
-var stream = await provider.GetData(DateTime.Today.AddDays(-1));
+var stream = await provider.GetData(DateTime.Now.AddDays(-13));
 
 var parser = new ExcelDataParser();
 
 var data = parser.ReadExcelFile(stream);
 
+
 Console.ReadKey();
+
+
