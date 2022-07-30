@@ -1,0 +1,43 @@
+﻿ 
+ old method
+ private IEnumerable<HourlyPriceAndVolume> ParseHourlyPriceAndVolumeFor(DataTable dt)
+        {
+
+            var Data = new List<HourlyPriceAndVolume>();
+
+            var date = dt.Rows[1][0].ToString();
+            var OgDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            OgDate = OgDate.AddDays(-6);
+
+
+
+            for (int i = 2; i < dt.Columns.Count; i++)
+            {
+                var HPVObject = new HourlyPriceAndVolume();
+                var HourlyData = new List<HourlyData>();
+
+                HPVObject.Date = OgDate;
+                for (var x = 4; x < dt.Rows.Count; x += 2)
+                {
+                    var HDataObj = new HourlyData
+                    {
+                        HourOfDay = HPVHour(dt.Rows[x][0].ToString(), OgDate),
+                        Price = decimal.Parse(dt.Rows[x][i].ToString()),
+                        Volume = decimal.Parse(dt.Rows[x + 1][i].ToString())
+                    };
+                    HourlyData.Add(HDataObj);
+
+                }
+                HPVObject.HData = HourlyData;
+
+
+                Data.Add(HPVObject);
+                OgDate = OgDate.AddDays(1);
+            }
+
+
+
+
+            return Data.ToArray();
+
+        }

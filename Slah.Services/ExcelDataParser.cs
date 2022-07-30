@@ -33,14 +33,16 @@ namespace ScrapperExcel
             var peakLoadDataTable = tables.ElementAt(1);
             var blocksDataTable = tables.ElementAt(2);
             var hourlyPricesAndVolumes = tables.ElementAt(3);
+            var hourlyPricesAndVolumesFor = tables.ElementAt(3);
 
 
             return new
             {
-                BaseLoad = ParseBasePeakLoad(baseLoadDataTable),
-                PeakLoadDataTable = ParseBasePeakLoad(peakLoadDataTable),
-                blocksDataTable = ParseBlocks(blocksDataTable),
-                HPVDataTable = ParseHourlyPriceAndVolume(hourlyPricesAndVolumes)
+                //BaseLoad = ParseBasePeakLoad(baseLoadDataTable),
+                //PeakLoadDataTable = ParseBasePeakLoad(peakLoadDataTable),
+                //blocksDataTable = ParseBlocks(blocksDataTable),
+                HPVDataTable = ParseHourlyPriceAndVolume(hourlyPricesAndVolumes),
+                HPVDataTableFor = ParseHourlyPriceAndVolumeFor(hourlyPricesAndVolumes)
 
             };
         }
@@ -53,18 +55,32 @@ namespace ScrapperExcel
             var ogDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             ogDate = ogDate.AddDays(-6);
 
-            for (int i = 1; i < dt.Columns.Count; i++)
+            dt.Columns.Cast<DataColumn>().Skip(1).ToList().ForEach(col =>
             {
                 var obj = new LoadExtremes
                 {
                     Date = ogDate,
-                    Price = (double)dt.Rows[4][i],
-                    Volume = (double)dt.Rows[5][i]
+                    Price = (double)dt.Rows[4][col],
+                    Volume = (double)dt.Rows[5][col]
                 };
 
                 data.Add(obj);
                 ogDate = ogDate.AddDays(1);
-            }
+
+            });
+
+            //for (int i = 1; i < dt.Columns.Count; i++)
+            //{
+            //    var obj = new LoadExtremes
+            //    {
+            //        Date = ogDate,
+            //        Price = (double)dt.Rows[4][i],
+            //        Volume = (double)dt.Rows[5][i]
+            //    };
+
+            //    data.Add(obj);
+            //    ogDate = ogDate.AddDays(1);
+            //}
 
             return data.ToArray();
         }
@@ -78,36 +94,35 @@ namespace ScrapperExcel
             var OgDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             OgDate = OgDate.AddDays(-6);
 
-            for(int i = 2; i < dt.Columns.Count; i++)
+            dt.Columns.Cast<DataColumn>().Skip(2).ToList().ForEach(col =>
             {
                 var HPVObject = new HourlyPriceAndVolume();
                 var HourlyData = new List<HourlyData>();
 
                 HPVObject.Date = OgDate;
-                for(var x=4; x<dt.Rows.Count ; x+=2)
+                var PriceVolumeRows=ChunkList(dt.Rows.Cast<DataRow>().Skip(4).ToList(), 2);
+                PriceVolumeRows.ForEach(rows =>
                 {
                     var HDataObj = new HourlyData
                     {
-                        HourOfDay = HPVHour(dt.Rows[x][0].ToString(), OgDate),
-                        Price = decimal.Parse(dt.Rows[x][i].ToString()),
-                        Volume = decimal.Parse(dt.Rows[x+1][i].ToString())
+                        HourOfDay = HPVHour(rows[0][0].ToString(), OgDate),
+                        Price = decimal.Parse(rows[0][col].ToString()),
+                        Volume = decimal.Parse(rows[1][col].ToString())
                     };
                     HourlyData.Add(HDataObj);
-                    
-                }
+
+                });
                 HPVObject.HData = HourlyData;
-
-
                 Data.Add(HPVObject);
                 OgDate = OgDate.AddDays(1);
-                
-            };
-          
 
+
+            });
+                     
             return Data.ToArray();
 
         }
-
+       
 
         private IEnumerable<Block> ParseBlocks(DataTable dt)
         {
@@ -116,61 +131,59 @@ namespace ScrapperExcel
 
             var OgDate = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             OgDate = OgDate.AddDays(-6);
-
-
-            { //dt.Columns.Cast<DataColumn>().Skip(1).ToList().ForEach( i =>
-              //{
-              //    var block = new Block()
-              //    {
-              //        Date = OgDate,
-              //        Periods = dt.Rows.Cast<DataRow>().Skip(4).Select(x => new PeriodicPrice()
-              //        {
-              //            Name = PeriodNameRegexExtractor(x[0].ToString()),
-              //            Period = new Period()
-              //            {
-              //                Start = PeriodHourSeparator(x[0].ToString(),OgDate)[0],
-              //                End = PeriodHourSeparator(x[0].ToString(),OgDate)[1],
-              //            },
-              //            Price = decimal.Parse(x[i].ToString())
-
-
-                //        })
-
-                //    };
-                //    Data.Add(block);
-                //    OgDate = OgDate.AddDays(1);
-
-
-                //});
-            }
-
-            for (var i = 1; i < dt.Columns.Count; i++)
+            dt.Columns.Cast<DataColumn>().Skip(1).ToList().ForEach(col =>
             {
                 var block = new Block();
                 var PeriodicPrices = new List<PeriodicPrice>();
-
                 block.Date = OgDate;
 
-                for(var x=4;x<dt.Rows.Count;x++)
+                dt.Rows.Cast<DataRow>().Skip(4).ToList().ForEach(row =>
                 {
                     var periodicPriceObj = new PeriodicPrice()
                     {
-                        Name = PeriodNameRegexExtractor(dt.Rows[x][0].ToString()),
-                        Price = decimal.Parse(dt.Rows[x][i].ToString()),
+                        Name = PeriodNameRegexExtractor(row[0].ToString()),
+                        Price = decimal.Parse(row[col].ToString()),
                         Period = new Period()
                         {
-                            Start = PeriodHourSeparator(dt.Rows[x][0].ToString(), OgDate)[0],
-                            End = PeriodHourSeparator(dt.Rows[x][0].ToString(), OgDate)[1]
+                            Start = PeriodHourSeparator(row[0].ToString(), OgDate)[0],
+                            End = PeriodHourSeparator(row[0].ToString(), OgDate)[1]
                         }
                     };
                     PeriodicPrices.Add(periodicPriceObj);
-                }
-
+                });
                 block.Periods = PeriodicPrices;
-
                 Data.Add(block);
-
                 OgDate = OgDate.AddDays(1);
+            });
+
+            {
+                //for (var i = 1; i < dt.Columns.Count; i++)
+                //{
+                //    var block = new Block();
+                //    var PeriodicPrices = new List<PeriodicPrice>();
+
+                //    block.Date = OgDate;
+                //    for(var x=4;x<dt.Rows.Count;x++)
+                //    {
+                //        var periodicPriceObj = new PeriodicPrice()
+                //        {
+                //            Name = PeriodNameRegexExtractor(dt.Rows[x][0].ToString()),
+                //            Price = decimal.Parse(dt.Rows[x][i].ToString()),
+                //            Period = new Period()
+                //            {
+                //                Start = PeriodHourSeparator(dt.Rows[x][0].ToString(), OgDate)[0],
+                //                End = PeriodHourSeparator(dt.Rows[x][0].ToString(), OgDate)[1]
+                //            }
+                //        };
+                //        PeriodicPrices.Add(periodicPriceObj);
+                //    }
+                //    block.Periods = PeriodicPrices;
+
+                //    Data.Add(block);
+
+                //    OgDate = OgDate.AddDays(1);
+
+                //}
 
             }
             return Data.ToArray();
@@ -178,6 +191,14 @@ namespace ScrapperExcel
 
 
         //HourlyPriceAndVolume methods
+        private List<List<T>> ChunkList<T>(IEnumerable<T> data, int size)
+        {
+            return data
+              .Select((x, i) => new { Index = i, Value = x })
+              .GroupBy(x => x.Index / size)
+              .Select(x => x.Select(v => v.Value).ToList())
+              .ToList();
+        }
         private DateTime HPVHour(string str, DateTime date)
         {
             Regex HourMatchingPattern = new Regex(@"[^H]*$");
@@ -198,6 +219,7 @@ namespace ScrapperExcel
             
 
         }
+
 
         //Blocks only  methods
         private DateTime[] PeriodHourSeparator(string str,DateTime date)
